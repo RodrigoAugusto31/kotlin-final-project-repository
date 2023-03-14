@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Minhas Tarefas</string>
+    <string name="login">Entrar</string>
+    <string name="email">Email</string>
+    <string name="password">Senha</string>
+    <string name="confirm_password">Confirmar senha</string>
+    <string name="register">Registrar</string>
+    <string name="login_google">Entrar com google</string>
+    <string name="register_google_toast">Registro com google</string>
+    <string name="login_google_toast">Entrando com google</string>
+    <string name="login_toast">Entrando com login normal</string>
+    <string name="create_account_login_success">Logado com sucesso</string>
+    <string name="create_account_login_fail">Falha ao logar</string>
+    <string name="create_account_password_do_not_match">Senhas não coencidem</string>
+    <string name="create_account_user_created">Usuario criado com sucesso</string>
+    <string name="create_account_email_already_in_use">Email ja cadastrado</string>
+    <string name="create_account_weak_password">Senha fraca</string>
+    <string name="create_account_equal_but_not_right_size_passwords">Senhas são iguais mas de tamanho inadequado</string>
+    <string name="create_account_fill_all_fields">Preencha todos os campos</string>
+    <string name="create_account_email_sent">Email enviado com sucesso</string>
+    <string name="check_your_email">Verifique seu email</string>
+    <string name="add">Adicionar</string>
+    <string name="delete">Deletar</string>
+    <string name="tasks_list">Lista de tarefas</string>
+    <string name="clear">Limpar</string>
+    <string name="my_tasks">Minhas tarefas:</string>
+</resources>

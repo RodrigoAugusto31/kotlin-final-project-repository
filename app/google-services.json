@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "854413662215",
+    "project_id": "final-project-rodrigo-augusto",
+    "storage_bucket": "final-project-rodrigo-augusto.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:854413662215:android:c6f66e7e2bdf921fb1b2a2",
+        "android_client_info": {
+          "package_name": "com.example.finalprojectrodrigoaugusto"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "854413662215-t8605l04te7k704v9oqi476j7af5hcin.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.finalprojectrodrigoaugusto",
+            "certificate_hash": "424311f4a8ebefebd0fd83c76392696faf56e021"
+          }
+        },
+        {
+          "client_id": "854413662215-5pklih164u7k40tuth6ktqnm226o7lah.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAc5x8wY-JXJSsDFig3hYidRiayv2yylZk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "854413662215-5pklih164u7k40tuth6ktqnm226o7lah.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
