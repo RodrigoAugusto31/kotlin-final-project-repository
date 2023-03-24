@@ -24,4 +24,9 @@
     <string name="tasks_list">Lista de tarefas</string>
     <string name="clear">Limpar</string>
     <string name="my_tasks">Minhas tarefas:</string>
+
+    <string name="change_password_do_not_match">Senhas não coencidem</string>
+    <string name="change_password_less_then_6">A senha precisa ter mais de 6 digitos</string>
+    <string name="change_password_success">Senha Alterada</string>
+    <string name="email_sent">Email enviado com sucesso!</string>
 </resources>

@@ -28,6 +28,14 @@
                 android:layout_marginEnd="16dp"
                 android:src="@drawable/outline_logout_24" />
 
+            <ImageView
+                android:id="@+id/main_bt_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="16dp"
+                android:src="@drawable/profile_icon" />
+
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
