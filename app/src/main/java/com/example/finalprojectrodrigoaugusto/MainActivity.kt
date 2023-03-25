@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         loginVerification()
         setUpGoogleSignIn()
         setListViewAndButtonsFunctions()
-        setProfileButtonListener()
+        setButtonsListeners()
         setLogOutButtonListener(firebaseAuth)
     }
 
@@ -69,9 +69,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setProfileButtonListener() {
+    private fun setButtonsListeners() {
         binding.mainBtProfile?.setOnClickListener {
             val activity = Intent(this, ProfileActivity::class.java)
+            startActivity(activity)
+        }
+
+        binding.floatBtAddTask?.setOnClickListener {
+            val activity = Intent(this, TaskActivity::class.java)
             startActivity(activity)
         }
     }

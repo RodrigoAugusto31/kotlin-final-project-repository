@@ -54,14 +54,14 @@
     <EditText
         android:id="@+id/main_edit_txt_add_item"
         style="@style/CustomEditText"
-        android:inputType="text"
-        android:imeOptions="actionNone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
         android:hint="@string/add"
+        android:imeOptions="actionNone"
+        android:inputType="text"
         app:layout_constraintTop_toBottomOf="@+id/main_txt_title" />
 
     <LinearLayout
@@ -100,7 +100,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:backgroundTint="@color/gray"
+            android:backgroundTint="@color/grey"
             android:text="@string/clear" />
     </LinearLayout>
 
@@ -108,25 +108,36 @@
         android:id="@+id/main_edit_txt_sub_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/my_tasks"
-        android:layout_marginTop="25dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="25dp"
+        android:text="@string/my_tasks"
         android:textColor="@color/black"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/buttons_layout" />
-    
+
     <ListView
         android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
         android:choiceMode="multipleChoice"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_edit_txt_sub_title"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/main_edit_txt_sub_title" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/float_bt_add_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/green"
+        android:src="@drawable/add_task_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

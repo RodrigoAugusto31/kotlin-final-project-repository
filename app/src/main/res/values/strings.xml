@@ -29,4 +29,5 @@
     <string name="change_password_less_then_6">A senha precisa ter mais de 6 digitos</string>
     <string name="change_password_success">Senha Alterada</string>
     <string name="email_sent">Email enviado com sucesso!</string>
+    <string name="task_created">Tarefa criada com sucesso!</string>
 </resources>
