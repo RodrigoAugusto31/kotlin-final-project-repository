@@ -1,28 +1,35 @@
 package com.example.finalprojectrodrigoaugusto
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.SparseBooleanArray
 import android.widget.ArrayAdapter
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import com.example.finalprojectrodrigoaugusto.activitys.LoginScreen
+import com.example.finalprojectrodrigoaugusto.activitys.ProfileActivity
+import com.example.finalprojectrodrigoaugusto.activitys.TaskActivity
 import com.example.finalprojectrodrigoaugusto.databinding.ActivityMainBinding
+import com.example.finalprojectrodrigoaugusto.fragments.WeatherFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var sharedPreferences: SharedPreferences
-    private val gson = Gson()
     private lateinit var mGoogleSignClient: GoogleSignInClient
 
     private lateinit var firebaseAuth: FirebaseAuth
+
+    private val uid = FirebaseAuth.getInstance().currentUser?.uid
+    val ref = FirebaseDatabase.getInstance().getReference("/users/$uid/tasks")
+    private val listItems = ArrayList<String>()
 
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
@@ -31,17 +38,66 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        supportActionBar?.hide()
 
-        sharedPreferences = getSharedPreferences("lista de tarefas",Context.MODE_PRIVATE)
+        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, WeatherFragment()).commit()
+
+        supportActionBar?.hide()
 
         firebaseAuth = FirebaseAuth.getInstance()
 
+        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, listItems)
+        val listView = binding.listView
+        listView?.adapter = adapter
+
         loginVerification()
         setUpGoogleSignIn()
-        setListViewAndButtonsFunctions()
         setButtonsListeners()
         setLogOutButtonListener(firebaseAuth)
+
+        ref.addValueEventListener(object: ValueEventListener {
+            val ctx = this@MainActivity
+
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                listItems.clear()
+
+                for(child in dataSnapshot.children){
+                    listItems.add(child.child("titulo").value.toString())
+                }
+
+                adapter.notifyDataSetChanged()
+
+                listView?.setOnItemLongClickListener { _, _, position, _ ->
+                    val itemId =  dataSnapshot.children.toList()[position].key
+
+                    if(itemId != null){
+                        AlertDialog.Builder(ctx)
+                            .setTitle("Deletar tarefa")
+                            .setMessage("Deseja deletar a tarefa?")
+                            .setPositiveButton("Sim"){ _, _ ->
+                                ref.child(itemId).removeValue()
+                                Toast.makeText(ctx, "Tarefa deletada com sucesso", Toast.LENGTH_SHORT).show()
+                            }
+                            .setNegativeButton("Não"){ dialog, _ ->
+                                dialog.dismiss()
+                            }
+                            .show()
+                    }
+
+                    true
+                }
+                listView?.setOnItemClickListener { _, _, position, _ ->
+                    val itemId =  dataSnapshot.children.toList()[position].key
+
+                    val activity = Intent(ctx, TaskActivity::class.java)
+                    activity.putExtra("id", itemId)
+                    startActivity(activity)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(ctx, "Erro ao carregar tarefas", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun loginVerification() {
@@ -78,63 +134,6 @@ class MainActivity : AppCompatActivity() {
         binding.floatBtAddTask?.setOnClickListener {
             val activity = Intent(this, TaskActivity::class.java)
             startActivity(activity)
-        }
-    }
-
-    private fun setListViewAndButtonsFunctions() {
-        val listView = binding.listView
-        val editText = binding.mainEditTxtAddItem
-
-        val itemList = getSharedPreferences()
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_multiple_choice, itemList)
-
-        listView!!.adapter = adapter
-        adapter.notifyDataSetChanged()
-
-        binding.mainBtAdd.setOnClickListener {
-            itemList.add(editText.text.toString())
-            listView.adapter = adapter
-            saveSharedPreferences(itemList)
-
-            adapter.notifyDataSetChanged()
-            editText.text.clear()
-        }
-
-        binding.mainBtDelete.setOnClickListener {
-            val position: SparseBooleanArray = listView.checkedItemPositions
-            val count = listView.count
-            var item  = count -1
-            while (item >= 0) {
-                if (position.get(item)) {
-                    adapter.remove(itemList[item])
-                }
-                item --
-            }
-            saveSharedPreferences(itemList)
-            position.clear()
-            adapter.notifyDataSetChanged()
-        }
-
-        binding.mainBtClear.setOnClickListener {
-            itemList.clear()
-            saveSharedPreferences(itemList)
-            adapter.notifyDataSetChanged()
-        }
-    }
-
-    private fun saveSharedPreferences(array: ArrayList<String>) {
-        val arrayJson = gson.toJson(array)
-        val editor = sharedPreferences.edit()
-        editor.putString("lista",arrayJson)
-        editor.apply()
-    }
-
-    private fun getSharedPreferences(): ArrayList<String> {
-        val arrayJson = sharedPreferences.getString("lista",null)
-        return if (arrayJson.isNullOrEmpty()) {
-            arrayListOf()
-        } else {
-            gson.fromJson(arrayJson, object :TypeToken<ArrayList<String>>(){}.type)
         }
     }
 }

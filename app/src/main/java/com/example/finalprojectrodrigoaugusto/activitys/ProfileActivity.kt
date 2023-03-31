@@ -1,4 +1,4 @@
-package com.example.finalprojectrodrigoaugusto
+package com.example.finalprojectrodrigoaugusto.activitys
 
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -23,6 +23,8 @@ import java.net.URL
 import android.Manifest
 import android.graphics.BitmapFactory
 import android.widget.ImageView
+import com.example.finalprojectrodrigoaugusto.MainActivity
+import com.example.finalprojectrodrigoaugusto.R
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 

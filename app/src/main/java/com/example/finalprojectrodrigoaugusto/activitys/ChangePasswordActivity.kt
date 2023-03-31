@@ -1,10 +1,11 @@
-package com.example.finalprojectrodrigoaugusto
+package com.example.finalprojectrodrigoaugusto.activitys
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.Toast
+import com.example.finalprojectrodrigoaugusto.R
 import com.example.finalprojectrodrigoaugusto.databinding.ActivityChangePasswordBinding
 import com.google.firebase.auth.FirebaseAuth
 

@@ -1,10 +1,12 @@
-package com.example.finalprojectrodrigoaugusto
+package com.example.finalprojectrodrigoaugusto.activitys
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.Toast
+import com.example.finalprojectrodrigoaugusto.MainActivity
+import com.example.finalprojectrodrigoaugusto.R
 import com.example.finalprojectrodrigoaugusto.databinding.ActivityCreateAccountBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount

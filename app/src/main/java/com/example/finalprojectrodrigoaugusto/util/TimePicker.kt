@@ -1,4 +1,4 @@
-package com.example.finalprojectrodrigoaugusto
+package com.example.finalprojectrodrigoaugusto.util
 
 import android.content.Context
 import android.view.View

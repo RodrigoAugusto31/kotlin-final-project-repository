@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="60dp"
-    tools:context=".CreateAccount">
+    tools:context=".activitys.CreateAccount">
 
     <TextView
         android:id="@+id/create_account_txt_title"

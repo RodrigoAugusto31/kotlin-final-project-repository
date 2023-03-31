@@ -1,14 +1,20 @@
-package com.example.finalprojectrodrigoaugusto
+package com.example.finalprojectrodrigoaugusto.activitys
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import com.example.finalprojectrodrigoaugusto.databinding.ActivityMainBinding
+import com.example.finalprojectrodrigoaugusto.MainActivity
+import com.example.finalprojectrodrigoaugusto.R
+import com.example.finalprojectrodrigoaugusto.util.TimePicker
 import com.example.finalprojectrodrigoaugusto.databinding.ActivityTaskBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import java.util.*
 
 class TaskActivity : AppCompatActivity() {
@@ -19,7 +25,7 @@ class TaskActivity : AppCompatActivity() {
     private val uid = FirebaseAuth.getInstance().currentUser?.uid
     private val dbRef = FirebaseDatabase.getInstance().getReference("/users/$uid/tasks")
 
-    var taskId: String = ""
+    private var taskId: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -83,7 +89,29 @@ class TaskActivity : AppCompatActivity() {
 
     private fun createUpdateTask() {
         if (taskId !== "") {
-//            TODO: Atualizar tarefa
+            val ref = FirebaseDatabase.getInstance().getReference("/users/$uid/tasks/$taskId")
+
+            ref.addListenerForSingleValueEvent(object: ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if(!snapshot.exists()) return
+                    val task = snapshot.value as HashMap<String, String>
+
+                    task["titulo"] = binding.tasksEdiTxtTitle.text.toString()
+                    task["descricao"] = binding.tasksEdiTxtDescription.text.toString()
+                    task["data"] = binding.tasksEditTxtDate.text.toString()
+                    task["hora"] = binding.tasksEditTxtHour.text.toString()
+
+                    ref.setValue(task)
+                    Toast.makeText(this@TaskActivity, "Tarefa atualizada com sucesso", Toast.LENGTH_SHORT).show()
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(this@TaskActivity, "Erro ao atualizar tarefa", Toast.LENGTH_SHORT).show()
+                }
+
+            })
+            backToHomeScreen()
+
         } else {
             val title = binding.tasksEdiTxtTitle
             val description = binding.tasksEdiTxtDescription
@@ -101,19 +129,42 @@ class TaskActivity : AppCompatActivity() {
             newElement.setValue(task)
 
             Toast.makeText(this, getString(R.string.task_created), Toast.LENGTH_SHORT).show()
+
+            backToHomeScreen()
         }
     }
 
     private fun loadTask() {
         this.taskId = intent.getStringExtra("id") ?: ""
-        if (taskId === "") return
-//        TODO: Carregar tarefa
+        if(taskId === "") return
+
+        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid/tasks/$taskId")
+
+        ref.addListenerForSingleValueEvent(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(!snapshot.exists()) return
+
+                binding.tasksEdiTxtTitle.setText(snapshot.child("titulo").value.toString())
+                binding.tasksEdiTxtDescription.setText(snapshot.child("descricao").value.toString())
+                binding.tasksEditTxtDate.setText(snapshot.child("data").value.toString())
+                binding.tasksEditTxtHour.setText(snapshot.child("hora").value.toString())
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@TaskActivity, "Erro ao carregar tarefa", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun setSaveTaskButtonListener() {
         binding.tasksBtSaveTask.setOnClickListener {
             createUpdateTask()
         }
+    }
+
+    private fun backToHomeScreen() {
+        val intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
     }
 
 }

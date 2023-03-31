@@ -39,70 +39,14 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <TextView
-        android:id="@+id/main_txt_title"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:text="@string/tasks_list"
-        android:textColor="@color/black"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
-
-    <EditText
-        android:id="@+id/main_edit_txt_add_item"
-        style="@style/CustomEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        android:hint="@string/add"
-        android:imeOptions="actionNone"
-        android:inputType="text"
-        app:layout_constraintTop_toBottomOf="@+id/main_txt_title" />
-
-    <LinearLayout
-        android:id="@+id/buttons_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="20dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/white"
+        android:id="@+id/fragment_container"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_edit_txt_add_item">
-
-        <Button
-            android:id="@+id/main_bt_add"
-            style="@style/CustomButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@color/green"
-            android:text="@string/add" />
-
-        <Button
-            android:id="@+id/main_bt_delete"
-            style="@style/CustomButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@color/red"
-            android:text="@string/delete" />
-
-        <Button
-            android:id="@+id/main_bt_clear"
-            style="@style/CustomButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@color/grey"
-            android:text="@string/clear" />
-    </LinearLayout>
+        android:layout_marginTop="76dp"/>
 
     <TextView
         android:id="@+id/main_edit_txt_sub_title"
@@ -114,7 +58,7 @@
         android:textColor="@color/black"
         android:textSize="22sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/buttons_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/fragment_container" />
 
     <ListView
         android:id="@+id/list_view"
@@ -123,7 +67,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:choiceMode="multipleChoice"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/main_edit_txt_sub_title" />
