@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.example.finalprojectrodrigoaugusto.MainActivity
 import com.example.finalprojectrodrigoaugusto.R
 import com.example.finalprojectrodrigoaugusto.databinding.ActivityCreateAccountBinding
+import com.example.finalprojectrodrigoaugusto.fragments.PasswordFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -23,9 +24,9 @@ import com.google.firebase.auth.GoogleAuthProvider
 class CreateAccount : AppCompatActivity() {
 
     private lateinit var email: EditText
-    private lateinit var password: EditText
+    private lateinit var password: PasswordFragment
     private lateinit var confirmPassword: EditText
-    private lateinit var createAccountInputArrayList: Array<EditText>
+    private lateinit var createAccountInputArrayList: Array<Any>
 
     private lateinit var mGoogleClient: GoogleSignInClient
     private val reqCode = 123
@@ -41,7 +42,7 @@ class CreateAccount : AppCompatActivity() {
         supportActionBar?.hide()
 
         email = binding.createAccountEditTxtEmail
-        password = binding.createAccountEditTxtPassword
+        password = supportFragmentManager.findFragmentById(R.id.password_fragment) as PasswordFragment
         confirmPassword = binding.createAccountEditTxtConfirmPassword
         createAccountInputArrayList = arrayOf(email, password, confirmPassword)
 
@@ -156,7 +157,7 @@ class CreateAccount : AppCompatActivity() {
             if (verifyIdenticalPassword()) {
                 if (verifySizePassword()) {
                     val userEmail = binding.createAccountEditTxtEmail.text.toString().trim()
-                    val userPassword = binding.createAccountEditTxtPassword.text.toString().trim()
+                    val userPassword = password.text.toString().trim()
 
                     firebaseAuth.createUserWithEmailAndPassword(userEmail, userPassword)
                         .addOnCompleteListener {

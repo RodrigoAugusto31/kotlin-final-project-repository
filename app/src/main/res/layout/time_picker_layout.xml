@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
-            android:text="Selecione um horario"
+            android:text="@string/selecione_um_horario"
             android:textColor="@color/black"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -80,7 +80,7 @@
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/red"
-                android:text="Cancelar" />
+                android:text="@string/cancelar" />
 
             <Button
                 android:id="@+id/timepicker_bt_save"
@@ -92,7 +92,7 @@
                 android:layout_marginBottom="5dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/green"
-                android:text="Salvar" />
+                android:text="@string/salvar" />
 
         </LinearLayout>
 

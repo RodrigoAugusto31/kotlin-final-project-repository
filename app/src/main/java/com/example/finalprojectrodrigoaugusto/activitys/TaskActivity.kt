@@ -102,11 +102,11 @@ class TaskActivity : AppCompatActivity() {
                     task["hora"] = binding.tasksEditTxtHour.text.toString()
 
                     ref.setValue(task)
-                    Toast.makeText(this@TaskActivity, "Tarefa atualizada com sucesso", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@TaskActivity, getString(R.string.tarefa_atualizada), Toast.LENGTH_SHORT).show()
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(this@TaskActivity, "Erro ao atualizar tarefa", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@TaskActivity, getString(R.string.erro_ao_atualizar_tarefa), Toast.LENGTH_SHORT).show()
                 }
 
             })
@@ -151,7 +151,7 @@ class TaskActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@TaskActivity, "Erro ao carregar tarefa", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@TaskActivity, getString(R.string.erro_ao_carregar_tarefa), Toast.LENGTH_SHORT).show()
             }
         })
     }

@@ -71,13 +71,13 @@ class MainActivity : AppCompatActivity() {
 
                     if(itemId != null){
                         AlertDialog.Builder(ctx)
-                            .setTitle("Deletar tarefa")
-                            .setMessage("Deseja deletar a tarefa?")
-                            .setPositiveButton("Sim"){ _, _ ->
+                            .setTitle(getString(R.string.deletar_tarefa))
+                            .setMessage(getString(R.string.confirma_deletar_tarefa))
+                            .setPositiveButton(getString(R.string.sim)){ _, _ ->
                                 ref.child(itemId).removeValue()
-                                Toast.makeText(ctx, "Tarefa deletada com sucesso", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(ctx, getString(R.string.tarefa_deletada), Toast.LENGTH_SHORT).show()
                             }
-                            .setNegativeButton("Não"){ dialog, _ ->
+                            .setNegativeButton(getString(R.string.nao)){ dialog, _ ->
                                 dialog.dismiss()
                             }
                             .show()
@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(ctx, "Erro ao carregar tarefas", Toast.LENGTH_SHORT).show()
+                Toast.makeText(ctx, getString(R.string.erro_ao_carregar_tarefas), Toast.LENGTH_SHORT).show()
             }
         })
     }

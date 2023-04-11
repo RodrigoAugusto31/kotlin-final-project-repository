@@ -205,7 +205,7 @@ class ProfileActivity : AppCompatActivity() {
         val uploadTask = imageRef.putBytes(data)
 
         uploadTask.addOnFailureListener {
-            Toast.makeText(this, "Falha ao salvar imagem", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.falha_ao_salvar_imagem), Toast.LENGTH_SHORT).show()
         }.addOnSuccessListener {
             imageRef.downloadUrl.addOnSuccessListener { uri ->
                 val profileUpdates = userProfileChangeRequest {
@@ -215,10 +215,10 @@ class ProfileActivity : AppCompatActivity() {
 
                 user!!.updateProfile(profileUpdates).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        Toast.makeText(this, "Perfil atualizado com sucesso", Toast.LENGTH_SHORT)
+                        Toast.makeText(this, getString(R.string.perfil_atualizado), Toast.LENGTH_SHORT)
                             .show()
                     } else {
-                        Toast.makeText(this, "Falha ao atualizar perfil", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, getString(R.string.falha_ao_atualizar_perfil), Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -257,15 +257,15 @@ class ProfileActivity : AppCompatActivity() {
 
         if (requestCode == PERMISSION_REQUEST_CAMERA) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Permissão de camera concedida", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.permissao_camera_ok), Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Permissão de camera negada", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.permissao_camera_negada), Toast.LENGTH_SHORT).show()
             }
         } else if (requestCode == PERMISSION_REQUEST_READ_EXTERNAL_STORAGE) {
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(this, "Permissão de galeria concedida", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.permissao_galeria_ok), Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "Permissão de galeria negada", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.permissao_galeria_negada), Toast.LENGTH_SHORT).show()
             }
         }
     }
