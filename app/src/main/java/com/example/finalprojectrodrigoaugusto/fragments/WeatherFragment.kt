@@ -12,12 +12,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import com.example.finalprojectrodrigoaugusto.R
+import com.example.finalprojectrodrigoaugusto.databinding.FragmentWeatherBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -26,27 +24,41 @@ import java.net.URL
 
 class WeatherFragment : Fragment() {
 
-    companion object{
+    private var _binding: FragmentWeatherBinding? = null
+    private val binding get() = _binding!!
+
+    companion object {
         private const val REQUEST_LOCATION_PERMISSION = 1
     }
 
     data class WeatherData(val temperature: Double, val description: String, val conditionCode: Int)
     data class DistrictDate(val city: String, val district: String)
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_weather, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentWeatherBinding.inflate(inflater,container,false)
 
-        if(ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
-            getLocation(view)
-        }else{
-            requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), REQUEST_LOCATION_PERMISSION)
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            getLocation(binding.root)
+        } else {
+            requestPermissions(
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                REQUEST_LOCATION_PERMISSION
+            )
         }
 
-        return view;
+        return binding.root
     }
 
-    private fun getWeatherIcon(conditionCode: Int): String{
-        return when(conditionCode){
+    private fun getWeatherIcon(conditionCode: Int): String {
+        return when (conditionCode) {
             in 200..232 -> "wi_thunderstorm"
             in 300..321 -> "wi_showers"
             in 500..531 -> "wi_rain"
@@ -61,8 +73,8 @@ class WeatherFragment : Fragment() {
         }
     }
 
-    private fun getWeatherColor(conditionCode: Int): String{
-        return when(conditionCode){
+    private fun getWeatherColor(conditionCode: Int): String {
+        return when (conditionCode) {
             in 200..232 -> "#637E90"
             in 300..321 -> "#29B3FF"
             in 500..531 -> "#14C2DD"
@@ -77,9 +89,10 @@ class WeatherFragment : Fragment() {
         }
     }
 
-    private suspend fun getWeatherData(latitude: Double, longitude: Double): WeatherData{
+    private suspend fun getWeatherData(latitude: Double, longitude: Double): WeatherData {
         val apiKey = "c5f719b3a46245ff906190214233103"
-        val url = "https://api.weatherapi.com/v1/current.json?lang=pt&key=$apiKey&q=$latitude,$longitude"
+        val url =
+            "https://api.weatherapi.com/v1/current.json?lang=pt&key=$apiKey&q=$latitude,$longitude"
         val jsonText = withContext(Dispatchers.IO) { URL(url).readText() }
         val jsonObject = JSONObject(jsonText)
         val current = jsonObject.getJSONObject("current")
@@ -90,8 +103,9 @@ class WeatherFragment : Fragment() {
         return WeatherData(temperature, description, conditionCode)
     }
 
-    private suspend fun getCityDistrict(latitude: Double, longitude: Double): DistrictDate{
-        val url = "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=$latitude&longitude=$longitude&localityLanguage=pt"
+    private suspend fun getCityDistrict(latitude: Double, longitude: Double): DistrictDate {
+        val url =
+            "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=$latitude&longitude=$longitude&localityLanguage=pt"
         val jsonText = withContext(Dispatchers.IO) { URL(url).readText() }
         val jsonObject = JSONObject(jsonText)
         val city = jsonObject.getString("city")
@@ -100,17 +114,21 @@ class WeatherFragment : Fragment() {
         return DistrictDate(city, district)
     }
 
-    private fun updateUi(weatherData: WeatherData, cityDistrict: DistrictDate, view: View){
-        val temperatureTextView = view.findViewById<TextView>(R.id.weather_fragment_txt_temperature)
-        val descriptionTextView = view.findViewById<TextView>(R.id.weather_fragment_txt_description)
-        val neighborhoodTextView = view.findViewById<TextView>(R.id.weather_fragment_txt_neighborhood)
+    private fun updateUi(weatherData: WeatherData, cityDistrict: DistrictDate, view: View) {
+        val temperatureTextView = binding.weatherFragmentTxtTemperature
+        val descriptionTextView = binding.weatherFragmentTxtDescription
+        val neighborhoodTextView = binding.weatherFragmentTxtNeighborhood
 
         temperatureTextView.text = "${weatherData.temperature} °C"
         descriptionTextView.text = weatherData.description
         neighborhoodTextView.text = "${cityDistrict.district}, ${cityDistrict.city}"
 
-        val imageView = view.findViewById<ImageView>(R.id.weather_fragment_img_view)
-        val drawableId = resources.getIdentifier(getWeatherIcon(weatherData.conditionCode), "drawable", requireContext().packageName)
+        val imageView = binding.weatherFragmentImgView
+        val drawableId = resources.getIdentifier(
+            getWeatherIcon(weatherData.conditionCode),
+            "drawable",
+            requireContext().packageName
+        )
         imageView.setImageResource(drawableId)
 
         val hexColor = getWeatherColor(weatherData.conditionCode)
@@ -118,22 +136,25 @@ class WeatherFragment : Fragment() {
         imageView.setColorFilter(color)
     }
 
-    private fun getLocation(view: View){
-        val locationManager = requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    private fun getLocation(view: View) {
+        val locationManager =
+            requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-        if(ActivityCompat.checkSelfPermission(
+        if (ActivityCompat.checkSelfPermission(
                 requireActivity(),
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
                 requireActivity(),
-                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             return
         }
 
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, object:
-            LocationListener{
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0f, object :
+            LocationListener {
             override fun onLocationChanged(location: Location) {
-                lifecycleScope.launch{
+                lifecycleScope.launch {
                     val weatherData = getWeatherData(location.latitude, location.longitude)
                     val cityDistrict = getCityDistrict(location.latitude, location.longitude)
 

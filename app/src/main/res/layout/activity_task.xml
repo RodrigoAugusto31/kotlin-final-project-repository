@@ -29,6 +29,7 @@
         android:layout_marginTop="10dp"
         android:gravity="top"
         android:hint="@string/descricao"
+        android:imeOptions="actionNone"
         android:inputType="textMultiLine"
         android:lines="4"
         android:padding="10dp"

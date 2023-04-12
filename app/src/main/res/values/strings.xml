@@ -65,4 +65,6 @@
     <string name="senha_media">Senha media</string>
     <string name="senha_forte">Senha forte</string>
     <string name="senha_muito_forte">Senha muito forte</string>
+    <string name="nova_tarefa_vencendo">Sua tarefa mais nova vence agora!</string>
+    <string name="proxima_tarefa_vencendo">Fique atento pois sua próxima tarefa vencerá agora!!!</string>
 </resources>

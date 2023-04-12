@@ -65,4 +65,6 @@
     <string name="senha_media">Password average</string>
     <string name="senha_forte">Strong Password</string>
     <string name="senha_muito_forte">Very strong password</string>
+    <string name="nova_tarefa_vencendo">Your newest task is now due!</string>
+    <string name="proxima_tarefa_vencendo">Stay tuned your next task is now due!!!</string>
 </resources>
