@@ -67,4 +67,7 @@
     <string name="senha_muito_forte">Very strong password</string>
     <string name="nova_tarefa_vencendo">Your newest task is now due!</string>
     <string name="proxima_tarefa_vencendo">Stay tuned your next task is now due!!!</string>
+    <string name="sem_email">Empty email</string>
+    <string name="email_invalido">Invalid email</string>
+    <string name="email_valido">Valid Email!!!</string>
 </resources>

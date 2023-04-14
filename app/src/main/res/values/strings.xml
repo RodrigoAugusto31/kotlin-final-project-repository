@@ -67,4 +67,7 @@
     <string name="senha_muito_forte">Senha muito forte</string>
     <string name="nova_tarefa_vencendo">Sua tarefa mais nova vence agora!</string>
     <string name="proxima_tarefa_vencendo">Fique atento pois sua próxima tarefa vencerá agora!!!</string>
+    <string name="sem_email">Sem Email</string>
+    <string name="email_invalido">Email inválido</string>
+    <string name="email_valido">Email Válido!!!</string>
 </resources>

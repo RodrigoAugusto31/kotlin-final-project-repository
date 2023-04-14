@@ -16,25 +16,10 @@
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/create_account_edit_txt_email"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <EditText
-        android:id="@+id/create_account_edit_txt_email"
-        style="@style/CustomEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:hint="@string/email"
-        android:imeOptions="actionNone"
-        android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/password_fragment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/create_account_txt_title" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <fragment
         android:id="@+id/password_fragment"
@@ -45,7 +30,7 @@
         app:layout_constraintBottom_toTopOf="@+id/create_account_edit_txt_confirm_password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/create_account_edit_txt_email" />
+        app:layout_constraintTop_toBottomOf="@+id/create_account_txt_title" />
 
     <EditText
         android:id="@+id/create_account_edit_txt_confirm_password"
