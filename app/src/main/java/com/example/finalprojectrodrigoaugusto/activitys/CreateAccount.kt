@@ -1,11 +1,14 @@
-package com.example.finalprojectrodrigoaugusto
+package com.example.finalprojectrodrigoaugusto.activitys
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.Toast
+import com.example.finalprojectrodrigoaugusto.MainActivity
+import com.example.finalprojectrodrigoaugusto.R
 import com.example.finalprojectrodrigoaugusto.databinding.ActivityCreateAccountBinding
+import com.example.finalprojectrodrigoaugusto.fragments.PasswordFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -20,10 +23,10 @@ import com.google.firebase.auth.GoogleAuthProvider
 
 class CreateAccount : AppCompatActivity() {
 
-    private lateinit var email: EditText
-    private lateinit var password: EditText
+    private lateinit var email: PasswordFragment
+    private lateinit var password: PasswordFragment
     private lateinit var confirmPassword: EditText
-    private lateinit var createAccountInputArrayList: Array<EditText>
+    private lateinit var createAccountInputArrayList: Array<Any>
 
     private lateinit var mGoogleClient: GoogleSignInClient
     private val reqCode = 123
@@ -38,8 +41,8 @@ class CreateAccount : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
-        email = binding.createAccountEditTxtEmail
-        password = binding.createAccountEditTxtPassword
+        email = supportFragmentManager.findFragmentById(R.id.password_fragment) as PasswordFragment
+        password = supportFragmentManager.findFragmentById(R.id.password_fragment) as PasswordFragment
         confirmPassword = binding.createAccountEditTxtConfirmPassword
         createAccountInputArrayList = arrayOf(email, password, confirmPassword)
 
@@ -122,13 +125,13 @@ class CreateAccount : AppCompatActivity() {
         }
     }
 
-    private fun notEmpty(): Boolean = password.text.toString().trim().isNotEmpty() &&
-            confirmPassword.text.toString().trim().isNotEmpty() && email.text.toString().trim()
+    private fun notEmpty(): Boolean = password.passwordText.toString().trim().isNotEmpty() &&
+            confirmPassword.text.toString().trim().isNotEmpty() && email.emailText.toString().trim()
         .isNotEmpty()
 
     private fun verifyIdenticalPassword(): Boolean {
         var identical = false
-        if (password.text.toString().trim() == confirmPassword.text.toString().trim()) {
+        if (password.passwordText.toString().trim() == confirmPassword.text.toString().trim()) {
             identical = true
         } else {
             Toast.makeText(
@@ -143,7 +146,7 @@ class CreateAccount : AppCompatActivity() {
 
     private fun verifySizePassword(): Boolean {
         var correct = false
-        if (password.text.toString().trim().length >= 6) {
+        if (password.passwordText.toString().trim().length >= 6) {
             correct = true
         }
         return correct
@@ -153,8 +156,8 @@ class CreateAccount : AppCompatActivity() {
         if (notEmpty()) {
             if (verifyIdenticalPassword()) {
                 if (verifySizePassword()) {
-                    val userEmail = binding.createAccountEditTxtEmail.text.toString().trim()
-                    val userPassword = binding.createAccountEditTxtPassword.text.toString().trim()
+                    val userEmail = email.emailText.toString().trim()
+                    val userPassword = password.passwordText.toString().trim()
 
                     firebaseAuth.createUserWithEmailAndPassword(userEmail, userPassword)
                         .addOnCompleteListener {

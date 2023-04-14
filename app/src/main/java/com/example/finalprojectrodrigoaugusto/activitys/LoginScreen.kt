@@ -1,10 +1,12 @@
-package com.example.finalprojectrodrigoaugusto
+package com.example.finalprojectrodrigoaugusto.activitys
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.EditText
 import android.widget.Toast
+import com.example.finalprojectrodrigoaugusto.MainActivity
+import com.example.finalprojectrodrigoaugusto.R
 import com.example.finalprojectrodrigoaugusto.databinding.ActivityLoginScreenBinding
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -40,10 +42,9 @@ class LoginScreen : AppCompatActivity() {
 
         firebaseAuth = FirebaseAuth.getInstance()
 
+        setButtonsListeners()
         setUpGoogleSignIn()
-        setRegisterButtonListener()
-        setLoginButtonListener()
-        setLoginWithGoggleButtonListener()
+
     }
 
     private fun setUpGoogleSignIn() {
@@ -54,23 +55,24 @@ class LoginScreen : AppCompatActivity() {
         mGoogleClient = GoogleSignIn.getClient(this, gso)
     }
 
-    private fun setRegisterButtonListener() {
+    private fun setButtonsListeners() {
         binding.btRegister.setOnClickListener {
             val activity = Intent(this, CreateAccount::class.java)
             startActivity(activity)
         }
-    }
 
-    private fun setLoginWithGoggleButtonListener() {
         binding.btLoginGoogle.setOnClickListener {
             val signIntent: Intent = mGoogleClient.signInIntent
             startActivityForResult(signIntent, reqCode)
         }
-    }
 
-    private fun setLoginButtonListener() {
         binding.btLogin.setOnClickListener {
             sign()
+        }
+
+        binding.textViewForgotPassword.setOnClickListener {
+            val activity = Intent(this, ForgotPasswordActivity::class.java);
+            startActivity(activity)
         }
     }
 
